@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -15,6 +17,8 @@ import com.example.wordle.POJO.Word;
 
 @Component
 public class Dictionary {
+
+    private static final Logger log = LogManager.getLogger();
 
     @Autowired
     ResourceLoader resourceLoader;
@@ -46,7 +50,7 @@ public class Dictionary {
             }
             scan.close();
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            log.error("An error occurred reading the words.txt file.");
             e.printStackTrace();
         }
     }

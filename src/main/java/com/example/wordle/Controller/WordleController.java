@@ -1,5 +1,7 @@
 package com.example.wordle.Controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,8 @@ import com.example.wordle.GameLogic.WordleService;
 @RestController
 public class WordleController {
 
+    private static final Logger log = LogManager.getLogger();
+
     @Autowired
     WordleService service;
 
@@ -25,6 +29,7 @@ public class WordleController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value = "wordle/{index}/{guess}", produces = "application/json")
     public ResponseEntity<Object> userGuess(@PathVariable int index, @PathVariable String guess) {
+        log.debug("index = " + index + " and guess = " + guess);
         return new ResponseEntity<>(service.checkGuess(index, guess), HttpStatus.OK);
     }
 

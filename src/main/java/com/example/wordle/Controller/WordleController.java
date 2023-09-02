@@ -21,7 +21,7 @@ public class WordleController {
     WordleService service;
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping(value = "wordle/start", produces = "application/json")
+    @GetMapping(value = "/wordle/start", produces = "application/json")
     public ResponseEntity<Object> getHiddenWord() {
         int number = service.randomNumber();
         log.debug("Wordle started, sent number " + number);
@@ -29,7 +29,7 @@ public class WordleController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping(value = "wordle/{index}/{guess}", produces = "application/json")
+    @GetMapping(value = "/wordle/{index}/{guess}", produces = "application/json")
     public ResponseEntity<Object> userGuess(@PathVariable int index, @PathVariable String guess) {
         log.debug("index = " + index + " and guess = " + guess);
         System.out.println("index = " + index + " and guess = " + guess);

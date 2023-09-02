@@ -40,6 +40,7 @@ public class WordleService {
                         ow.getCharacters().get(c.getIndex()).setCorrect("");
                         util.copyWord(temp, hidden);
                         temp.getCharacters().get(c.getIndex()).setCharacter('.');
+                        hidden = temp;
                         break;
                     } else {
                         if (!ow.getCharacters().get(c.getIndex()).getCorrect().isEmpty()) {
@@ -47,6 +48,7 @@ public class WordleService {
                             ow.getCharacters().get(c.getIndex()).setCorrect("[Y]");
                         }
                         temp.getCharacters().get(h.getIndex()).setCharacter('.');
+                        hidden = temp;
                     }
                 }
             }

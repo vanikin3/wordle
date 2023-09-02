@@ -15,7 +15,7 @@ import com.example.wordle.GameLogic.WordleService;
 @RestController
 public class WordleController {
 
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger(WordleController.class);
 
     @Autowired
     WordleService service;
@@ -23,14 +23,21 @@ public class WordleController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value = "wordle/start", produces = "application/json")
     public ResponseEntity<Object> getHiddenWord() {
-        return new ResponseEntity<>(service.randomNumber(), HttpStatus.OK);
+        int number = service.randomNumber();
+        log.debug("Wordle started, sent number " + number);
+        return new ResponseEntity<>(number, HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value = "wordle/{index}/{guess}", produces = "application/json")
     public ResponseEntity<Object> userGuess(@PathVariable int index, @PathVariable String guess) {
         log.debug("index = " + index + " and guess = " + guess);
-        return new ResponseEntity<>(service.checkGuess(index, guess), HttpStatus.OK);
+        System.out.println("index = " + index + " and guess = " + guess);
+        if(index >= 0 && !guess.isEmpty()){
+            return new ResponseEntity<>(service.checkGuess(index, guess), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

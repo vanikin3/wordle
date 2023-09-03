@@ -35,14 +35,15 @@ public class WordleController {
     @GetMapping(value = "/wordle/{index}/{guess}", produces = "application/json")
     public ResponseEntity<Object> userGuess(@PathVariable int index, @PathVariable String guess) {
         log.debug("index = " + index + " and guess = " + guess);
+        OutputWord ow = null;
         if(index >= 0 && !guess.isEmpty()){
-            OutputWord ow = service.checkGuess(index, guess);
+            ow = service.checkGuess(index, guess);
             if(!Objects.isNull(ow)){
                 return new ResponseEntity<>(ow, HttpStatus.OK);
             }
-            return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Object>(ow, HttpStatus.BAD_REQUEST);
         }else{
-            return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Object>(ow, HttpStatus.BAD_REQUEST);
         }
     }
 

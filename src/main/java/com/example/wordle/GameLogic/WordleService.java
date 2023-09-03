@@ -30,6 +30,7 @@ public class WordleService {
         return checkGuess(guess, dictionary.getWord(index));
     }
 
+    //TODO finish the last bug where if there are two letters guessed, if one is marked as [Y] then if the second letter is in the right place it will mark it as [X]
     private OutputWord checkGuess(Word guess, Word hidden) {
         OutputWord ow = new OutputWord(hidden.getLength());
         Word temp = util.copyWord(new Word(), hidden);

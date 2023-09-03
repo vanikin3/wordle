@@ -23,18 +23,22 @@ public class Dictionary {
     @Autowired
     ResourceLoader resourceLoader;
 
-    private ArrayList<Word> dictionary = new ArrayList<>();
+    private ArrayList<String> dictionary = new ArrayList<>();
 
     public Dictionary() {
         readFile();
     }
 
     public Word getWord(int index) {
-        return dictionary.get(index);
+        return new Word(dictionary.get(index));
     }
 
     public int getSize() {
         return dictionary.size();
+    }
+
+    public ArrayList<String> getDictionary(){
+        return this.dictionary;
     }
 
     private void readFile() {
@@ -45,7 +49,7 @@ public class Dictionary {
             while (scan.hasNextLine()) {
                 String line = scan.nextLine();
                 if (line.length() == 5) {
-                    dictionary.add(new Word(line));
+                    dictionary.add(line);
                 }
             }
             scan.close();

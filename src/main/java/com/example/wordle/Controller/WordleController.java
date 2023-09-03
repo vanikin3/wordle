@@ -1,5 +1,7 @@
 package com.example.wordle.Controller;
 
+import java.util.Objects;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.wordle.GameLogic.WordleService;
+import com.example.wordle.POJO.OutputWord;
 
 @RestController
 public class WordleController {
@@ -32,9 +35,12 @@ public class WordleController {
     @GetMapping(value = "/wordle/{index}/{guess}", produces = "application/json")
     public ResponseEntity<Object> userGuess(@PathVariable int index, @PathVariable String guess) {
         log.debug("index = " + index + " and guess = " + guess);
-        System.out.println("index = " + index + " and guess = " + guess);
         if(index >= 0 && !guess.isEmpty()){
-            return new ResponseEntity<>(service.checkGuess(index, guess), HttpStatus.OK);
+            OutputWord ow = service.checkGuess(index, guess);
+            if(!Objects.isNull(ow)){
+                return new ResponseEntity<>(ow, HttpStatus.OK);
+            }
+            return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
         }else{
             return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
         }

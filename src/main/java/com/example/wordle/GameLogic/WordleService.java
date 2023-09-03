@@ -23,6 +23,9 @@ public class WordleService {
     }
 
     public OutputWord checkGuess(int index, String input) {
+        if(!dictionary.getDictionary().contains(input)){
+            return null;
+        }
         Word guess = new Word(input);
         return checkGuess(guess, dictionary.getWord(index));
     }
